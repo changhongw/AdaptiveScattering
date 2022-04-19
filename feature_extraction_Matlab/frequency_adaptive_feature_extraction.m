@@ -1,19 +1,5 @@
 % Extract the frequency-adaptive scattering features
-clear all; clc; tic
-dataset_directory = '/import/c4dm-datasets/ChineseBambooFluteDataset/CBF-multilabel-binaryClassf/';
-addpath(genpath(dataset_directory))
-addpath(genpath('ScatNet/'))
-run 'addpath_scatnet.m' % Scat code
-
-fid=fopen('file_names.txt'); 
-tline = fgetl(fid);
-file_names = []; k=1;
-while ischar(tline)
-    file_names{k} = tline; 
-    k = k+1;
-    tline = fgetl(fid);
-end
-fclose(fid);
+function frequency_adaptive_feature_extraction(file_names)
 
 %% parametres
 T = 2^15;   
@@ -36,7 +22,7 @@ adapt_options.T = T;
 adapt_options.oversampling = tm_scat_opt.oversampling;
 adapt_options.Nbands = Nbands;
 
-fileFeatures_time = []; fileFeatures_separa = [];
+fileFeatures_time = []; fileFeatures_timerate = [];
 for k=1:length(file_names)
     [k length(file_names)]
     [x,fs] = audioread(file_names{k});
@@ -82,19 +68,19 @@ for k=1:length(file_names)
     adapt_options.fr_oversampling = 1;
 %     
     S_adapt_time = NaN*ones(moduScaleNumKept*Nbands, length(domIdx)); 
-    S_adapt_separa = [];
+    S_adapt_timerate = [];
     for jj=1:Nbands
         adapt_options.domIdx = domIdx+(Nbands-1)/2+1-jj;
         S_adapt_time((jj-1)*moduScaleNumKept+1:jj*moduScaleNumKept,:) = ... 
             adapt_time_scat(U{2},S,Wop_tm, adapt_options);
-        S_adapt_separa = [S_adapt_separa; ...
+        S_adapt_timerate = [S_adapt_timerate; ...
             freq_scat_SQ(S_adapt_time((jj-1)*moduScaleNumKept+1:jj*... 
             moduScaleNumKept,:), Wop_fr)]; 
     end
     
     fileFeatures_time{k} = S_adapt_time;
-    fileFeatures_separa{k} =  S_adapt_separa;
-    clear S_adapt_time S_adapt_separa Wop_tm Wop_fr S U domIdx ii jj ...
+    fileFeatures_timerate{k} =  S_adapt_timerate;
+    clear S_adapt_time S_adapt_timerate Wop_tm Wop_fr S U domIdx ii jj ...
         firstOrderCoeff filters modulation_freqcenter acoustic_freqcenter InterTemp
 
 end

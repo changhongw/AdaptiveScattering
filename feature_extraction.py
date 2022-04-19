@@ -23,21 +23,7 @@ with open('file_names.txt', 'w') as f:
 
 # extract AdaTS+AdaTRS feature in matlab
 t0 = time.time()
-subprocess.call(["matlab",
-                 "-r",
-                 "frequency_adaptive_feature_extraction",
-                 "-nodisplay",
-                 "-nodesktop"])
+run_matlab = "matlab -sd 'feature_extraction_Matlab/' -r 'feature_extract_main;exit' -nodisplay -nodesktop"
+subprocess.run(run_matlab, shell=True, check=True)
 
-print('frequency-adaptive feature extraction time:%.2f hours.' % ((time.time() - t0)/3600))
-
-
-# extract dJTFS-avg feature in matlab
-t0 = time.time()
-subprocess.call(["matlab",
-                 "-r",
-                 "direction_adaptive_feature_extraction",
-                 "-nodisplay",
-                 "-nodesktop"])
-
-print('direction-adaptive feature extraction time:%.2f hours.' % ((time.time() - t0)/3600))
+print('Feature extraction time:%.2f hours.' % ((time.time() - t0)/3600))
