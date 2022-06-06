@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # check wav files of the CBFdataset
-data_root = '/import/c4dm-datasets/ChineseBambooFluteDataset/CBF-multilabel-binaryClassf/'
+data_root = 'data/'
 target = "*.wav"
 wav_files = []  
 for path, subdirs, files in os.walk(data_root):
