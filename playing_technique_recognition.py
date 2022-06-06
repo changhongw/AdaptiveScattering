@@ -24,7 +24,7 @@ from sklearn.metrics import confusion_matrix
 
 ###### load data ######
 # check wav files of the dataset
-data_root = '/import/c4dm-datasets/ChineseBambooFluteDataset/CBF-multilabel-binaryClassf/'
+data_root = 'data/'
 target = "*.wav"
 wav_files = []  
 for path, subdirs, files in os.walk(data_root):
