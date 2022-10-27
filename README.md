@@ -5,10 +5,6 @@ Code for the paper: Changhong Wang, Emmanouil Benetos, Vincent Lostanlen and Ela
 ### Get code
 `git clone https://github.com/changhongw/AdaptiveScattering.git`
 
-### Install dependencies
-`conda create -n myenv python=3.7.13`<br>
-`conda install --file requirements.txt`
-
 ### Data
 Download the CBFdataset from https://zenodo.org/record/5744336.
 
